@@ -39,6 +39,14 @@ const PostsShow = props => (
   </DynamicImport>
 );
 
+const Search = props => (
+  <DynamicImport load={() => import("./components/search")}>
+    {Component =>
+      Component === null ? <div>Loading...</div> : <Component {...props} />
+    }
+  </DynamicImport>
+);
+
 class App extends Component {
   render() {
     return (
@@ -47,6 +55,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route path="/posts/new" component={PostsNew} />
+              <Route path="/search" component={Search} />
               <Route path="/posts/:id" component={PostsShow} />
               <Route path="/" component={PostsIndex} />
             </Switch>
