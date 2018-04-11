@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
+import {
+  createDynamicMiddleware,
+  createDynamicReducer
+} from "redux-dynamic-registry";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import promise from "redux-promise";
 
-import reducers from "./reducers";
+import postReducer from "./reducers/reducer_posts";
+// import reducers from "./reducers";
 import PostsIndex from "./components/posts_index";
 
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+// const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+
+const store = createStore(
+  postReducer,
+  applyMiddleware(promise, createDynamicMiddleware().middleware)
+);
 
 class DynamicImport extends Component {
   state = { component: null };
@@ -39,8 +49,8 @@ const PostsShow = props => (
   </DynamicImport>
 );
 
-const Search = props => (
-  <DynamicImport load={() => import("./components/search")}>
+const Test = props => (
+  <DynamicImport load={() => import("./components/test")}>
     {Component =>
       Component === null ? <div>Loading...</div> : <Component {...props} />
     }
@@ -50,12 +60,12 @@ const Search = props => (
 class App extends Component {
   render() {
     return (
-      <Provider store={createStoreWithMiddleware(reducers)}>
+      <Provider store={store}>
         <BrowserRouter>
           <div>
             <Switch>
               <Route path="/posts/new" component={PostsNew} />
-              <Route path="/search" component={Search} />
+              <Route path="/test" component={Test} />
               <Route path="/posts/:id" component={PostsShow} />
               <Route path="/" component={PostsIndex} />
             </Switch>
