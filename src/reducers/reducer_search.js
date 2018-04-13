@@ -1,5 +1,5 @@
 export default function(
-  state = { msg: "yo reducer bata aako data hai" },
+  state = { msg: "Data here, is from the search reducer" },
   action
 ) {
   return state;

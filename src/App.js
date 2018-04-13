@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import promise from "redux-promise";
 
-import reducers from "./reducers";
+import initializeStore from "./store";
 import PostsIndex from "./components/posts_index";
-
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 class DynamicImport extends Component {
   state = { component: null };
@@ -47,10 +42,11 @@ const Search = props => (
   </DynamicImport>
 );
 
+const store = initializeStore();
 class App extends Component {
   render() {
     return (
-      <Provider store={createStoreWithMiddleware(reducers)}>
+      <Provider store={store}>
         <BrowserRouter>
           <div>
             <Switch>

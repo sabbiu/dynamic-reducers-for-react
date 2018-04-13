@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import searchReducer from "../reducers/reducer_search";
+import { withReducer } from "../withReducer";
 
 class Search extends Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <div>
@@ -14,4 +19,6 @@ class Search extends Component {
   }
 }
 
-export default connect(({ search }) => ({ search }))(Search);
+export default withReducer("search", searchReducer)(
+  connect(({ search }) => ({ search }))(Search)
+);

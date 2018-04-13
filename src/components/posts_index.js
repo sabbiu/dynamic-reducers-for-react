@@ -26,10 +26,12 @@ class PostsIndex extends Component {
           <Link className="btn btn-primary" to="/posts/new">
             Add a Post
           </Link>
-
+          <br />
+          <br />
           <Link className="btn btn-primary" to="/search">
-            Search
-          </Link>
+            Search (See changes in store)
+          </Link>{" "}
+          After clicking this, it will inject search in reducers
         </div>
         <h3>Posts</h3>
         <ul className="list-group">{this.renderPosts()}</ul>
